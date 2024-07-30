@@ -1,12 +1,45 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
+//import {FullMovie} from '../../../core/entities/movie.entity';
+import {useNavigation} from '@react-navigation/native';
 
-export const MovieHeader = () => {
+interface Props {
+  //movie: FullMovie;
+  poster: string;
+  originalTitle: string;
+  title: string;
+}
+
+export const MovieHeader = ({poster, originalTitle, title}: Props) => {
+  const {height: screenHeight} = useWindowDimensions();
+  const navigation = useNavigation();
   return (
-    <View>
-      <Text>hola</Text>
-    </View>
+    <>
+      <View style={{...styles.imageContainer, height: screenHeight * 0.7}}>
+        <View style={styles.imageBorder}>
+          <Image style={styles.posterImage} source={{uri: poster}} />
+        </View>
+      </View>
+
+      <View style={styles.marginContainer}>
+        <Text style={styles.subTitle}>{originalTitle}</Text>
+        <Text style={styles.title}>{title}</Text>
+      </View>
+
+      <View style={styles.backButton}>
+        <Pressable onPress={() => navigation.goBack()}>
+          <Text style={styles.backButtonText}>Regresar</Text>
+        </Pressable>
+      </View>
+    </>
   );
 };
 
